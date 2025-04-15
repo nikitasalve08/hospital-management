@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>आरोग्यधाम - एकात्मिक आरोग्य सेवा पोर्टल</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #0d47a1;
+            --accent-green: #00c853;
+            --accent-teal: #00bcd4;
+            --emergency-red: #e53935;
+            --maternity-pink: #e91e63;
+            --donation-orange: #ff6d00;
+            --scheme-teal: #00897b;
+            --ai-purple: #7b1fa2;
+            --golden-yellow: #ffb300;
+            --dark-gray: #263238;
+            --light-gray: #f5f5f5;
+        }
+        
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            color: white;
+            padding: 1.8rem 0;
+            border-radius: 0 0 25px 25px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            height: 80px;
+            margin-right: 20px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        .hospital-name {
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .hospital-tagline {
+            font-size: 1.05rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .emergency-ribbon {
+            background: linear-gradient(90deg, var(--emergency-red), #c62828);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(229, 57, 53, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 8px rgba(229, 57, 53, 0.3); }
+            50% { transform: scale(1.01); box-shadow: 0 6px 12px rgba(229, 57, 53, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 4px 8px rgba(229, 57, 53, 0.3); }
+        }
+        
+        .emergency-ribbon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                            rgba(255,255,255,0) 0%, 
+                            rgba(255,255,255,0.3) 50%, 
+                            rgba(255,255,255,0) 100%);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .main-container {
+            margin-top: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .service-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            height: 100%;
+            background-color: white;
+            position: relative;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--card-accent), var(--card-accent-dark));
+        }
+        
+        .card-header {
+            font-weight: 600;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background-color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-header i {
+            font-size: 1.4rem;
+            margin-right: 12px;
+            color: var(--card-accent);
+        }
+        
+        .card-body {
+            padding: 1.8rem;
+        }
+        
+        .btn-service {
+            width: 100%;
+            margin-bottom: 0.8rem;
+            text-align: left;
+            padding: 0.9rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            display: flex;
+            align-items: center;
+            color: var(--btn-text-color);
+            background-color: var(--btn-bg-color);
+        }
+        
+        .btn-service i {
+            font-size: 1.1rem;
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .btn-service::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                            rgba(255,255,255,0) 0%, 
+                            rgba(255,255,255,0.3) 50%, 
+                            rgba(255,255,255,0) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        
+        .btn-service:hover::after {
+            transform: translateX(100%);
+        }
+        
+        .btn-service:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Service Specific Styles */
+        .card-opd { --card-accent: var(--primary-blue); --card-accent-dark: var(--primary-dark); }
+        .btn-opd { --btn-bg-color: rgba(26, 115, 232, 0.08); --btn-text-color: var(--primary-blue); }
+        .btn-opd:hover { background-color: var(--primary-blue); color: white; }
+        
+        .card-consultation { --card-accent: var(--accent-green); --card-accent-dark: #009624; }
+        .btn-consultation { --btn-bg-color: rgba(0, 200, 83, 0.08); --btn-text-color: var(--accent-green); }
+        .btn-consultation:hover { background-color: var(--accent-green); color: white; }
+        
+        .card-ai { --card-accent: var(--ai-purple); --card-accent-dark: #4a148c; }
+        .btn-ai { --btn-bg-color: rgba(123, 31, 162, 0.08); --btn-text-color: var(--ai-purple); }
+        .btn-ai:hover { background-color: var(--ai-purple); color: white; }
+        
+        .card-emergency { --card-accent: var(--emergency-red); --card-accent-dark: #b71c1c; }
+        .btn-emergency { --btn-bg-color: rgba(229, 57, 53, 0.08); --btn-text-color: var(--emergency-red); }
+        .btn-emergency:hover { background-color: var(--emergency-red); color: white; }
+        
+        .card-maternity { --card-accent: var(--maternity-pink); --card-accent-dark: #ad1457; }
+        .btn-maternity { --btn-bg-color: rgba(233, 30, 99, 0.08); --btn-text-color: var(--maternity-pink); }
+        .btn-maternity:hover { background-color: var(--maternity-pink); color: white; }
+        
+        .card-feedback { --card-accent: var(--golden-yellow); --card-accent-dark: #ff8f00; }
+        .btn-feedback { --btn-bg-color: rgba(255, 179, 0, 0.08); --btn-text-color: var(--golden-yellow); }
+        .btn-feedback:hover { background-color: var(--golden-yellow); color: #333; }
+        
+        .card-schemes { --card-accent: var(--scheme-teal); --card-accent-dark: #00695c; }
+        .btn-schemes { --btn-bg-color: rgba(0, 137, 123, 0.08); --btn-text-color: var(--scheme-teal); }
+        .btn-schemes:hover { background-color: var(--scheme-teal); color: white; }
+        
+        .card-donation { --card-accent: var(--donation-orange); --card-accent-dark: #e65100; }
+        .btn-donation { --btn-bg-color: rgba(255, 109, 0, 0.08); --btn-text-color: var(--donation-orange); }
+        .btn-donation:hover { background-color: var(--donation-orange); color: white; }
+        
+        .card-ambulance { --card-accent: var(--accent-teal); --card-accent-dark: #00838f; }
+        .btn-ambulance { --btn-bg-color: rgba(0, 188, 212, 0.08); --btn-text-color: var(--accent-teal); }
+        .btn-ambulance:hover { background-color: var(--accent-teal); color: white; }
+        
+        .featured-services {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8eb);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .featured-service-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .featured-service-item:hover {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .featured-service-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .featured-service-text h5 {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        
+        .featured-service-text p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, var(--dark-gray), #1a2327);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-heading {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-teal);
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .footer-links a::before {
+            content: '→ ';
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover::before {
+            opacity: 1;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--primary-blue);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .language-switcher {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        
+        .language-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .language-btn:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+        
+        .dropdown-language {
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 0.5rem 0;
+            min-width: 150px;
+            display: none;
+        }
+        
+        .dropdown-language.show {
+            display: block;
+        }
+        
+        .dropdown-language a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .dropdown-language a:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--primary-blue);
+        }
+        
+        .badge-new {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--emergency-red);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 992px) {
+            .hospital-name {
+                font-size: 1.6rem;
+            }
+            
+            .hospital-tagline {
+                font-size: 0.95rem;
+            }
+            
+            .logo {
+                height: 60px;
+            }
+            
+            .featured-service-item {
+                margin-bottom: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 1.2rem 0;
+                border-radius: 0 0 15px 15px;
+            }
+            
+            .hospital-name {
+                font-size: 1.4rem;
+            }
+            
+            .hospital-tagline {
+                font-size: 0.9rem;
+            }
+            
+            .logo {
+                height: 50px;
+                margin-right: 15px;
+            }
+            
+            .emergency-ribbon {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            
+            .btn-service {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .language-switcher {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-container">
+                <img src="hospital logo.jpg" alt="Hospital Logo" class="logo">
+                <div>
+                    <h1 class="hospital-name">आरोग्यधाम</h1>
+                    <p class="hospital-tagline">उत्कृष्ट आरोग्य सेवा - प्रत्येकासाठी, प्रत्येक ठिकाणी</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Emergency Ribbon -->
+    <div class="container mt-4">
+        <div class="emergency-ribbon">
+            <i class="fas fa-ambulance"></i> आणीबाणी सेवा: 108 किंवा 112 वर कॉल करा | जवळची आपत्कालीन विभाग शोधा
+        </div>
+    </div>
+
+    <!-- Featured Services -->
+    <div class="container">
+        <div class="featured-services">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="featured-service-item">
+                        <div class="featured-service-icon" style="background: var(--primary-blue);">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="featured-service-text">
+                            <h5>OPD अपॉइंटमेंट</h5>
+                            <p>ऑनलाइन नोंदणी करा</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="featured-service-item">
+                        <div class="featured-service-icon" style="background: var(--accent-green);">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="featured-service-text">
+                            <h5>डॉक्टर कन्सल्ट</h5>
+                            <p>व्हिडिओ/चॅट द्वारे</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="featured-service-item">
+                        <div class="featured-service-icon" style="background: var(--maternity-pink);">
+                            <i class="fas fa-baby"></i>
+                        </div>
+                        <div class="featured-service-text">
+                            <h5>प्रसूती सेवा</h5>
+                            <p>मातृ शिशु आरोग्य</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="featured-service-item">
+                        <div class="featured-service-icon" style="background: var(--emergency-red);">
+                            <i class="fas fa-ambulance"></i>
+                        </div>
+                        <div class="featured-service-text">
+                            <h5>एम्ब्युलन्स</h5>
+                            <p>लाइव ट्रॅकिंग</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Services Grid -->
+    <div class="container main-container">
+        <div class="row">
+            <!-- Digital OPD Registration -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card card-opd">
+                    <div class="card-header">
+                        <i class="fas fa-user-plus"></i>
+                        <span>डिजिटल OPD नोंदणी</span>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-opd">
+                            <i class="fas fa-sign-in-alt"></i> नवीन रुग्ण नोंदणी
+                        </button>
+                        <button class="btn btn-service btn-opd">
+                            <i class="fas fa-calendar-check"></i> अपॉइंटमेंट बुक करा
+                        </button>
+                        <button class="btn btn-service btn-opd">
+                            <i class="fas fa-file-medical"></i> माझी आरोग्य माहिती
+                        </button>
+                        <button class="btn btn-service btn-opd">
+                            <i class="fas fa-prescription-bottle-alt"></i> औषध ऑर्डर करा
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Remote Consultation -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card card-consultation">
+                    <div class="card-header">
+                        <i class="fas fa-video"></i>
+                        <span>रिमोट कन्सल्टेशन</span>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-consultation">
+                            <i class="fas fa-user-md"></i> डॉक्टरांशी संपर्क साधा
+                        </button>
+                        <button class="btn btn-service btn-consultation">
+                            <i class="fas fa-tablet-alt"></i> व्हिडिओ कन्सल्टेशन
+                        </button>
+                        <button class="btn btn-service btn-consultation">
+                            <i class="fas fa-comments"></i> चॅट कन्सल्टेशन
+                        </button>
+                        <button class="btn btn-service btn-consultation">
+                            <i class="fas fa-prescription"></i> ई-प्रिस्क्रिप्शन
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI Chatbot -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card card-ai">
+                    <div class="card-header">
+                        <i class="fas fa-robot"></i>
+                        <span>AI चॅटबॉट (आरोग्य मित्र)</span>
+                        <div class="badge-new">NEW</div>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-ai">
+                            <i class="fas fa-stethoscope"></i> प्राथमिक आरोग्य मार्गदर्शक
+                        </button>
+                        <button class="btn btn-service btn-ai">
+                            <i class="fas fa-question-circle"></i> सामान्य प्रश्न
+                        </button>
+                        <button class="btn btn-service btn-ai">
+                            <i class="fas fa-pills"></i> औषध माहिती
+                        </button>
+                        <button class="btn btn-service btn-ai">
+                            <i class="fas fa-diagnoses"></i> लक्षण चेकर
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Emergency Support -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card card-emergency">
+                    <div class="card-header">
+                        <i class="fas fa-first-aid"></i>
+                        <span>आणीबाणी आधार</span>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-emergency">
+                            <i class="fas fa-phone-alt"></i> 108 आणीबाणी सेवा
+                        </button>
+                        <button class="btn btn-service btn-emergency">
+                            <i class="fas fa-map-marker-alt"></i> जवळचे JPS ठिकाण
+                        </button>
+                        <button class="btn btn-service btn-emergency">
+                            <i class="fas fa-heartbeat"></i> प्राथमिक उपचार मार्गदर्शक
+                        </button>
+                        <button class="btn btn-service btn-emergency">
+                            <i class="fas fa-procedures"></i> जवळचे रुग्णालय शोधा
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Maternity Services -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card card-maternity">
+                    <div class="card-header">
+                        <i class="fas fa-baby"></i>
+                        <span>प्रसूती सेवा</span>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-maternity">
+                            <i class="fas fa-syringe"></i> लसीकरण सेवा - मातृ शिशु आरोग्य
+                        </button>
+                        <button class="btn btn-service btn-maternity">
+                            <i class="fas fa-calendar-alt"></i> गर्भवती महिला वेळापत्रक
+                        </button>
+                        <button class="btn btn-service btn-maternity">
+                            <i class="fas fa-child"></i> आंगणवाडी सेवा
+                        </button>
+                        <button class="btn btn-service btn-maternity">
+                            <i class="fas fa-book-medical"></i> प्रसूतीपूर्व देखभाल
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feedback & Complaints -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card card-feedback">
+                    <div class="card-header">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>अभिप्राय / तक्रार नोंदणी</span>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-feedback">
+                            <i class="fas fa-smile"></i> सेवा अभिप्राय
+                        </button>
+                        <button class="btn btn-service btn-feedback">
+                            <i class="fas fa-frown"></i> तक्रार नोंदणी
+                        </button>
+                        <button class="btn btn-service btn-feedback">
+                            <i class="fas fa-star"></i> आमच्या सेवांचे रेटिंग
+                        </button>
+                        <button class="btn btn-service btn-feedback">
+                            <i class="fas fa-question"></i> सुचना / प्रश्न
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Schemes & Facilities -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card card-schemes">
+                    <div class="card-header">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <span>योजना आणि सुविधा</span>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-schemes">
+                            <i class="fas fa-info-circle"></i> सरकारी योजनांची माहिती
+                        </button>
+                        <button class="btn btn-service btn-schemes">
+                            <i class="fas fa-rupee-sign"></i> आयुष्मान भारत योजना
+                        </button>
+                        <button class="btn btn-service btn-schemes">
+                            <i class="fas fa-file-invoice-dollar"></i> रुग्णालयीन सवलती
+                        </button>
+                        <button class="btn btn-service btn-schemes">
+                            <i class="fas fa-procedures"></i> विशेष उपचार सुविधा
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Donation Services -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card card-donation">
+                    <div class="card-header">
+                        <i class="fas fa-hand-holding-medical"></i>
+                        <span>कार्यसहाय्य आणि दातृत्व सेवा</span>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-donation">
+                            <i class="fas fa-hand-holding-usd"></i> गरजूंसाठी फंडिंग प्लॅटफॉर्म
+                        </button>
+                        <button class="btn btn-service btn-donation">
+                            <i class="fas fa-tint"></i> रक्तदान स्वयंसेवक नोंदणी
+                        </button>
+                        <button class="btn btn-service btn-donation">
+                            <i class="fas fa-heart"></i> अवयव दान नोंदणी
+                        </button>
+                        <button class="btn btn-service btn-donation">
+                            <i class="fas fa-hands-helping"></i> स्वयंसेवक होण्यासाठी
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <img src="hospital logo.jpg" alt="Hospital Logo" class="footer-logo">
+                    <p>आरोग्यधाम हे एक अत्याधुनिक रुग्णालय आहे जे सर्वांसाठी गुणवत्तापूर्ण आणि सुलभ आरोग्य सेवा पुरवते.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="footer-heading">द्रुत लिंक</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">होमपेज</a></li>
+                        <li><a href="#">आमच्याबद्दल</a></li>
+                        <li><a href="#">डॉक्टर्स</a></li>
+                        <li><a href="#">सेवा</a></li>
+                        <li><a href="#">संपर्क</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
+                    <h5 class="footer-heading">सेवा</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">आपत्कालीन सेवा</a></li>
+                        <li><a href="#">OPD सेवा</a></li>
+                        <li><a href="#">प्रसूती सेवा</a></li>
+                        <li><a href="#">शल्यचिकित्सा</a></li>
+                        <li><a href="#">डायग्नोस्टिक सेवा</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <h5 class="footer-heading">संपर्क</h5>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 आरोग्य मार्ग, पुणे, महाराष्ट्र</li>
+                        <li><i class="fas fa-phone-alt me-2"></i> 020-12345678</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@arogyadham.com</li>
+                        <li><i class="fas fa-clock me-2"></i> सोम-शनि: 24 तास | रवि: सकाळ 8 - संध्याकाळ 8</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p class="mb-0">© 2023 आरोग्यधाम. सर्व हक्क राखीव. | <a href="#" class="text-white">गोपनीयता धोरण</a> | <a href="#" class="text-white">वापर अटी</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="language-btn" id="languageBtn">
+            <i class="fas fa-language"></i>
+        </button>
+        <div class="dropdown-language" id="languageDropdown">
+            <a href="#">English</a>
+            <a href="#">हिंदी</a>
+            <a href="#">मराठी</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Language switcher functionality
+        document.getElementById('language
