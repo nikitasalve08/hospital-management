@@ -1,93 +1,470 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Hospital Services</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(to right, #f0f4f8, #d9e2ec);
-    }
-    .card {
-      transition: transform 0.2s ease-in-out, box-shadow 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
-    .title {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>आरोग्य सेवा - एकात्मिक रुग्ण सेवा पोर्टल</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --accent-color: #198754;
+            --emergency-color: #dc3545;
+            --maternity-color: #ff6b9d;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #0b5ed7);
+            color: white;
+            padding: 1.5rem 0;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            height: 70px;
+            margin-right: 15px;
+        }
+        
+        .hospital-name {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .hospital-tagline {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .main-container {
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .service-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-header {
+            font-weight: 600;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .btn-service {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-service i {
+            margin-right: 10px;
+        }
+        
+        .btn-opd {
+            background-color: rgba(13, 110, 253, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .btn-opd:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-consultation {
+            background-color: rgba(25, 135, 84, 0.1);
+            color: var(--accent-color);
+        }
+        
+        .btn-consultation:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-ai {
+            background-color: rgba(111, 66, 193, 0.1);
+            color: #6f42c1;
+        }
+        
+        .btn-ai:hover {
+            background-color: #6f42c1;
+            color: white;
+        }
+        
+        .btn-emergency {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--emergency-color);
+        }
+        
+        .btn-emergency:hover {
+            background-color: var(--emergency-color);
+            color: white;
+        }
+        
+        .btn-maternity {
+            background-color: rgba(255, 107, 157, 0.1);
+            color: var(--maternity-color);
+        }
+        
+        .btn-maternity:hover {
+            background-color: var(--maternity-color);
+            color: white;
+        }
+        
+        .btn-feedback {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+        
+        .btn-feedback:hover {
+            background-color: #ffc107;
+            color: #333;
+        }
+        
+        .btn-schemes {
+            background-color: rgba(32, 201, 151, 0.1);
+            color: #20c997;
+        }
+        
+        .btn-schemes:hover {
+            background-color: #20c997;
+            color: white;
+        }
+        
+        .btn-donation {
+            background-color: rgba(253, 126, 20, 0.1);
+            color: #fd7e14;
+        }
+        
+        .btn-donation:hover {
+            background-color: #fd7e14;
+            color: white;
+        }
+        
+        .btn-ambulance {
+            background-color: rgba(13, 202, 240, 0.1);
+            color: #0dcaf0;
+        }
+        
+        .btn-ambulance:hover {
+            background-color: #0dcaf0;
+            color: white;
+        }
+        
+        .emergency-banner {
+            background-color: var(--emergency-color);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .language-switcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        @media (max-width: 768px) {
+            .hospital-name {
+                font-size: 1.4rem;
+            }
+            
+            .hospital-tagline {
+                font-size: 0.9rem;
+            }
+            
+            .logo {
+                height: 50px;
+            }
+        }
+    </style>
 </head>
-<body class="font-sans text-gray-800">
-  <div class="container mx-auto px-4 py-10">
-    <h1 class="text-5xl title font-bold text-center text-blue-800 mb-12">🏥 Smart Hospital Services</h1>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <img src="hospital logo.jpg" alt="Hospital Logo" class="logo">
+                <div>
+                    <h1 class="hospital-name">आरोग्य सेवा</h1>
+                    <p class="hospital-tagline">सर्वांसाठी सुलभ आणि गुणवत्तापूर्ण आरोग्य सेवा</p>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <!-- 1. Digital OPD registration -->
-      <div class="card bg-white p-6 rounded-2xl shadow-md">
-        <h2 class="text-xl font-semibold mb-2">📝 Digital OPD Registration</h2>
-        <p class="text-gray-600">Register for outpatient department services digitally with ease.</p>
-      </div>
-
-      <!-- 2. Remote consultation -->
-      <div class="card bg-white p-6 rounded-2xl shadow-md">
-        <h2 class="text-xl font-semibold mb-2">💻 Remote Consultation</h2>
-        <p class="text-gray-600">Connect with doctors remotely through video or phone call.</p>
-      </div>
-
-      <!-- 3. AI Chatbot -->
-      <div class="card bg-white p-6 rounded-2xl shadow-md">
-        <h2 class="text-xl font-semibold mb-2">🤖 AI Chatbot</h2>
-        <p class="text-sm text-gray-600">आरोग्य मित्र तसेच प्राथमिक आरोग्य मार्गदर्शक</p>
-      </div>
-
-      <!-- 4. Emergency Support -->
-      <div class="card bg-red-50 p-6 rounded-2xl shadow-md">
-        <h2 class="text-xl font-semibold mb-2">🚑 Emergency Support</h2>
-        <p class="text-sm text-gray-700">Call 108 or share GPS location in emergencies.</p>
-      </div>
-
-      <!-- 5. प्रसूती Services -->
-      <div class="card bg-white p-6 rounded-2xl shadow-md">
-        <h2 class="text-xl font-semibold mb-4">🤰 प्रसूती Services</h2>
-        <ul class="text-gray-600 space-y-2">
-          <li>• लसीकरण सेवा - मातृ शिशु आरोग्य</li>
-          <li>• गर्भवती महिलांसाठी आवश्यक वेळापत्रक</li>
-        </ul>
-      </div>
-
-      <!-- 6. Feedback & Complaints -->
-      <div class="card bg-yellow-50 p-6 rounded-2xl shadow-md">
-        <h2 class="text-xl font-semibold mb-2">🗣️ Feedback / तक्रार नोंदणी</h2>
-        <p class="text-gray-600">Submit suggestions or complaints regarding services.</p>
-      </div>
-
-      <!-- 7. योजना आणि सुविधा -->
-      <div class="card bg-green-50 p-6 rounded-2xl shadow-md">
-        <h2 class="text-xl font-semibold mb-2">📄 योजना आणि सुविधा</h2>
-        <p class="text-sm text-gray-700">सरकारी योजनांची माहिती</p>
-      </div>
-
-      <!-- 8. कार्जसहायक्क आणि दातृत्व सेवा -->
-      <div class="card bg-white p-6 rounded-2xl shadow-md">
-        <h2 class="text-xl font-semibold mb-4">🙏 कार्जसहायक्क आणि दातृत्व सेवा</h2>
-        <ul class="text-gray-600 space-y-2">
-          <li>• गरजूं साठी Funding Platform</li>
-          <li>• रक्तदान / अवयवदान स्वयसेवक नोंदणी</li>
-        </ul>
-      </div>
-
-      <!-- 9. Ambulance Tracking -->
-      <div class="card bg-purple-50 p-6 rounded-2xl shadow-md">
-        <h2 class="text-xl font-semibold mb-2">🚨 Ambulance Tracking</h2>
-        <p class="text-gray-600">Track ambulance location in real-time for emergencies.</p>
-      </div>
-
+    <!-- Emergency Banner -->
+    <div class="container mt-3">
+        <div class="emergency-banner">
+            <i class="fas fa-ambulance"></i> आणीबाणी सेवा: 108 किंवा 112 वर कॉल करा
+        </div>
     </div>
-  </div>
+
+    <!-- Main Services Grid -->
+    <div class="container main-container">
+        <div class="row">
+            <!-- Digital OPD Registration -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-user-plus"></i> डिजिटल OPD नोंदणी
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-opd">
+                            <i class="fas fa-sign-in-alt"></i> नवीन रुग्ण नोंदणी
+                        </button>
+                        <button class="btn btn-service btn-opd">
+                            <i class="fas fa-calendar-check"></i> अपॉइंटमेंट बुक करा
+                        </button>
+                        <button class="btn btn-service btn-opd">
+                            <i class="fas fa-file-medical"></i> माझी आरोग्य माहिती
+                        </button>
+                        <button class="btn btn-service btn-opd">
+                            <i class="fas fa-prescription-bottle-alt"></i> औषध ऑर्डर करा
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Remote Consultation -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="card-header bg-success text-white">
+                        <i class="fas fa-video"></i> रिमोट कन्सल्टेशन
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-consultation">
+                            <i class="fas fa-user-md"></i> डॉक्टरांशी संपर्क साधा
+                        </button>
+                        <button class="btn btn-service btn-consultation">
+                            <i class="fas fa-tablet-alt"></i> व्हिडिओ कन्सल्टेशन
+                        </button>
+                        <button class="btn btn-service btn-consultation">
+                            <i class="fas fa-comments"></i> चॅट कन्सल्टेशन
+                        </button>
+                        <button class="btn btn-service btn-consultation">
+                            <i class="fas fa-prescription"></i> ई-प्रिस्क्रिप्शन
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI Chatbot -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="card-header text-white" style="background-color: #6f42c1;">
+                        <i class="fas fa-robot"></i> AI चॅटबॉट (आरोग्य मित्र)
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-ai">
+                            <i class="fas fa-stethoscope"></i> प्राथमिक आरोग्य मार्गदर्शक
+                        </button>
+                        <button class="btn btn-service btn-ai">
+                            <i class="fas fa-question-circle"></i> सामान्य प्रश्न
+                        </button>
+                        <button class="btn btn-service btn-ai">
+                            <i class="fas fa-pills"></i> औषध माहिती
+                        </button>
+                        <button class="btn btn-service btn-ai">
+                            <i class="fas fa-diagnoses"></i> लक्षण चेकर
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Emergency Support -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="card-header bg-danger text-white">
+                        <i class="fas fa-first-aid"></i> आणीबाणी आधार
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-emergency">
+                            <i class="fas fa-phone-alt"></i> 108 आणीबाणी सेवा
+                        </button>
+                        <button class="btn btn-service btn-emergency">
+                            <i class="fas fa-map-marker-alt"></i> जवळचे JPS ठिकाण
+                        </button>
+                        <button class="btn btn-service btn-emergency">
+                            <i class="fas fa-heartbeat"></i> प्राथमिक उपचार मार्गदर्शक
+                        </button>
+                        <button class="btn btn-service btn-emergency">
+                            <i class="fas fa-procedures"></i> जवळचे रुग्णालय शोधा
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Maternity Services -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="card-header text-white" style="background-color: #ff6b9d;">
+                        <i class="fas fa-baby"></i> प्रसूती सेवा
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-maternity">
+                            <i class="fas fa-syringe"></i> लसीकरण सेवा - मातृ शिशु आरोग्य
+                        </button>
+                        <button class="btn btn-service btn-maternity">
+                            <i class="fas fa-calendar-alt"></i> गर्भवती महिला वेळापत्रक
+                        </button>
+                        <button class="btn btn-service btn-maternity">
+                            <i class="fas fa-child"></i> आंगणवाडी सेवा
+                        </button>
+                        <button class="btn btn-service btn-maternity">
+                            <i class="fas fa-book-medical"></i> प्रसूतीपूर्व देखभाल
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feedback & Complaints -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="card-header text-white" style="background-color: #ffc107; color: #333 !important;">
+                        <i class="fas fa-comment-dots"></i> अभिप्राय / तक्रार नोंदणी
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-feedback">
+                            <i class="fas fa-smile"></i> सेवा अभिप्राय
+                        </button>
+                        <button class="btn btn-service btn-feedback">
+                            <i class="fas fa-frown"></i> तक्रार नोंदणी
+                        </button>
+                        <button class="btn btn-service btn-feedback">
+                            <i class="fas fa-star"></i> आमच्या सेवांचे रेटिंग
+                        </button>
+                        <button class="btn btn-service btn-feedback">
+                            <i class="fas fa-question"></i> सुचना / प्रश्न
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Schemes & Facilities -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="card-header text-white" style="background-color: #20c997;">
+                        <i class="fas fa-hand-holding-heart"></i> योजना आणि सुविधा
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-schemes">
+                            <i class="fas fa-info-circle"></i> सरकारी योजनांची माहिती
+                        </button>
+                        <button class="btn btn-service btn-schemes">
+                            <i class="fas fa-rupee-sign"></i> आयुष्मान भारत योजना
+                        </button>
+                        <button class="btn btn-service btn-schemes">
+                            <i class="fas fa-file-invoice-dollar"></i> रुग्णालयीन सवलती
+                        </button>
+                        <button class="btn btn-service btn-schemes">
+                            <i class="fas fa-procedures"></i> विशेष उपचार सुविधा
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Donation Services -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="card-header text-white" style="background-color: #fd7e14;">
+                        <i class="fas fa-hand-holding-medical"></i> कार्यसहाय्य आणि दातृत्व सेवा
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-donation">
+                            <i class="fas fa-hand-holding-usd"></i> गरजूंसाठी फंडिंग प्लॅटफॉर्म
+                        </button>
+                        <button class="btn btn-service btn-donation">
+                            <i class="fas fa-tint"></i> रक्तदान स्वयंसेवक नोंदणी
+                        </button>
+                        <button class="btn btn-service btn-donation">
+                            <i class="fas fa-heart"></i> अवयव दान नोंदणी
+                        </button>
+                        <button class="btn btn-service btn-donation">
+                            <i class="fas fa-hands-helping"></i> स्वयंसेवक होण्यासाठी
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ambulance Tracking -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card service-card">
+                    <div class="card-header text-white" style="background-color: #0dcaf0;">
+                        <i class="fas fa-ambulance"></i> एम्ब्युलन्स ट्रॅकिंग
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-service btn-ambulance">
+                            <i class="fas fa-map-marked-alt"></i> माझी एम्ब्युलन्स शोधा
+                        </button>
+                        <button class="btn btn-service btn-ambulance">
+                            <i class="fas fa-phone-alt"></i> एम्ब्युलन्स बुक करा
+                        </button>
+                        <button class="btn btn-service btn-ambulance">
+                            <i class="fas fa-clock"></i> अंदाजित आगमन वेळ
+                        </button>
+                        <button class="btn btn-service btn-ambulance">
+                            <i class="fas fa-hospital"></i> जवळचे रुग्णालय शोधा
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // You can add JavaScript functionality here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add any interactive functionality you need
+        });
+    </script>
 </body>
 </html>
